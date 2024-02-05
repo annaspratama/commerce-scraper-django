@@ -11,7 +11,11 @@ dist/
 *.class
 
 # Database
+migrations/
 *.sqlite3
+
+# Cache
+__pycache__/
 
 # Compiled Python bytecode
 *.py[cod]
