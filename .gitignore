@@ -10,6 +10,9 @@ dist/
 # Compiled Java class files
 *.class
 
+# Database
+*.sqlite3
+
 # Compiled Python bytecode
 *.py[cod]
 
