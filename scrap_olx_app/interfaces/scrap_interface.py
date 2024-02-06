@@ -11,35 +11,43 @@ class ScrapOlxInterface(ABC):
         See: https://www.olx.co.id
 
         Keyword arguments:
-        url -- the url site to OLX's products
+            - url -- the url site to OLX's products
 
         Returns:
-        None
+            - none
         """
         pass
 
     @abstractmethod
-    def scrap_olx(self, auto_download: bool = True) -> HttpResponse|Exception:
+    def scrap_olx(self, download: bool = True) -> HttpResponse|Exception:
         """
         Scrap OLX's products data.
 
         Keyword arguments:
-        auto_download -- the download feature (default is true)
+            - download -- the download feature (default is true)
 
         Returns:
-        HttpResponse -- Excel or CSV file if success
-        Exception -- Raise an exception if fail
+            - HttpResponse -- excel or CSV file if success
+            - Exception -- raise an exception if fail
         """
         pass
 
     @abstractmethod
     def validate_url(self) -> bool:
         """
-        Check the url is valid
+        Check the url is valid.
+
+        Returns:
+            - bool -- true or false
         """
         pass
 
     @abstractmethod
     def __del__(self) -> None:
-        """Destroy scrap OLX and the web driver"""
+        """
+        Destroy scrap OLX and the web driver.
+        
+        Returns:
+            - none
+        """
         pass

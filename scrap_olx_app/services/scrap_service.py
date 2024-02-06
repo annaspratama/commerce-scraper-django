@@ -1,5 +1,6 @@
-import re, time
+import re, time, os
 import pandas as pd
+from django.conf import settings as config
 from django.http import HttpResponse
 from django.utils import timezone as tz
 from scrap_olx_app.interfaces.scrap_interface import ScrapOlxInterface
@@ -18,17 +19,17 @@ class ScrapOlxService(ScrapOlxInterface):
         self.webdriver = webdriver.Safari()
         self.webdriver.maximize_window()
 
-    def scrap_olx(self, auto_download: bool = True) -> HttpResponse|Exception:
+    def scrap_olx(self, download: bool = True) -> HttpResponse|Exception:
 
         if self.url:
             # validate the url
             if self.validate_url():
                 self.webdriver.get(url=self.url)
 
-                # load more button  
-                for _ in range(1, 10):
+                # load more button on 5 pages 
+                for _ in range(1, 5):
                     try:
-                        WebDriverWait(self.webdriver, 60).until(EC.presence_of_element_located((By.XPATH, '//*[@id="main_content"]/div/div/section/div/div/div[4]/div[2]/div/div[2]/ul/li/div/button'))).click()
+                        WebDriverWait(driver=self.webdriver, timeout=60).until(method=EC.presence_of_element_located(locator=(By.XPATH, '//*[@id="main_content"]/div/div/section/div/div/div[4]/div[2]/div/div[2]/ul/li/div/button'))).click()
                         time.sleep(3)
                     except Exception as err:
                         print(err)
@@ -52,10 +53,22 @@ class ScrapOlxService(ScrapOlxInterface):
                     products.append(row)
 
                 # if true then download as excel file
-                if auto_download:
+                if download:
                     dataframe = pd.DataFrame(data=products)
                     now = tz.now().timestamp()
-                    dataframe.to_excel(excel_writer=f'exports/data_olx_{now}.xlsx', index=False)
+                    filename = f'data_olx_{now}.xlsx'
+                    dataframe.to_excel(excel_writer=f'media/{filename}', index=False)
+
+                    # download to browser
+                    file_path = os.path.join(config.MEDIA_ROOT, filename)
+
+                    if os.path.exists(file_path):
+                        # with open(file=file_path) as file:
+                        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                        response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
+                        return response
+                    else:
+                        return HttpResponse(content="File not found.", status=404)
 
                 return "Success"
             else: raise Exception("Error: URL is not valid.")
