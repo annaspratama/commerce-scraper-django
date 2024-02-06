@@ -5,11 +5,11 @@ from django.http import HttpResponse
 class ScrapOlxInterface(ABC):
     """
     Scrap OLX's products data.
-    See: https://olx.co.id
+    See: https://www.olx.co.id
     """
 
     @abstractmethod
-    def __init__(self, url: str) -> None:
+    def __init__(self, url: str = None) -> None:
         """
         Init data.
 
@@ -22,7 +22,7 @@ class ScrapOlxInterface(ABC):
         pass
 
     @abstractmethod
-    def scrap_olx(self, auto_download: bool = True) -> HttpResponse:
+    def scrap_olx(self, auto_download: bool = True) -> HttpResponse|Exception:
         """
         Scrap OLX's products data.
 
@@ -30,12 +30,13 @@ class ScrapOlxInterface(ABC):
         auto_download -- the download feature (default is true)
 
         Returns:
-        HttpResponse -- Excel or CSV file
+        HttpResponse -- Excel or CSV file if success
+        Exception -- Raise an exception if fail
         """
         pass
 
     @abstractmethod
-    def check_url(self) -> str:
+    def validate_url(self) -> bool:
         """
         Check the url
         """

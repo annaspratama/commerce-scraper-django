@@ -17,6 +17,9 @@ migrations/
 # Cache
 __pycache__/
 
+# Files
+*.xlsx
+
 # Compiled Python bytecode
 *.py[cod]
 
