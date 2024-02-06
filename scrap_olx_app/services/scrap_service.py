@@ -15,15 +15,16 @@ class ScrapOlxService(ScrapOlxInterface):
     def __init__(self, url: str = None) -> None:
 
         self.url = url
-        # set web driver, ex: safari, chrome, firefox, or edge
-        self.webdriver = webdriver.Safari()
-        self.webdriver.maximize_window()
+        self.webdriver = None
 
     def scrap_olx(self, download: bool = True) -> HttpResponse|Exception:
 
         if self.url:
             # validate the url
             if self.validate_url():
+                # set web driver, ex: safari, chrome, firefox, or edge
+                self.webdriver = webdriver.Safari()
+                self.webdriver.maximize_window()
                 self.webdriver.get(url=self.url)
 
                 # load more button on 5 pages 
@@ -63,13 +64,16 @@ class ScrapOlxService(ScrapOlxInterface):
                     file_path = os.path.join(config.MEDIA_ROOT, filename)
 
                     if os.path.exists(file_path):
-                        # with open(file=file_path) as file:
-                        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                        response = HttpResponse(open(file_path, 'rb').read())
+                        response['Content-Type'] = 'mimetype/submimetype'
                         response['Content-Disposition'] = 'attachment; filename="' + filename + '"'
+                        self.webdriver.quit()
                         return response
                     else:
+                        self.webdriver.quit()
                         return HttpResponse(content="File not found.", status=404)
 
+                self.webdriver.quit()
                 return "Success"
             else: raise Exception("Error: URL is not valid.")
         else: raise Exception("Error: URL is empty.")
@@ -83,6 +87,5 @@ class ScrapOlxService(ScrapOlxInterface):
 
     def __del__(self) -> None:
         
-        self.webdriver.quit()
         del self.url
         del self.webdriver

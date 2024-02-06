@@ -1,0 +1,10 @@
+.extra-fluid {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto
+}
+
+.footer {
+    height: 100px;
+}

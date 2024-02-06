@@ -1,0 +1,78 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrap Commerce Products</title>
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'custom/css/style.css' %}">
+</head>
+<body>
+    <div class="container-fluid extra-fluid">
+        <div class="row min-vh-100">
+            <div class="col-6 my-auto mx-auto text-center">
+                <div class="card mb-5">
+                    <div class="card-header bg-secondary">
+                        <h3 class="card-title text-light">Scrap Commerce Products</h3>
+                    </div>
+                    <div class="card-body bg-light">
+                        <form action="{% url "scrap_olx_app:scrap-products" %}" method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="url" class="form-control" aria-label="URL" required>
+                                        <label for="floatingInput">URL</label>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please provide a valid URL.</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" name="commerce" aria-label="Select Commerce" required>
+                                            <option value="" selected disabled>Select Commerce</option>
+                                            <option value="olx">OLX <small class="text-muted">(olx.co.id)</small></option>
+                                        </select>
+                                        <label for="floatingSelect">Commerces</label>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please select a valid Commerce.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" id="btn-submitx" class="btn btn-primary mt-2"><i class="fa fa-send"> Submit</i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer text-center bg-secondary fixed-bottom">
+                <div class="row px-4 px-lg-5">
+                    <ul class="list-inline mt-3 mb-2">
+                        <li class="list-inline-item">
+                            <a class="social-link rounded-circle text-white mr-3" href="mailto: annaspratama@icloud.com" target="_blank"><i class="fa fa-envelope fa-lg"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="social-link rounded-circle text-white mr-3" href="https://www.facebook.com/annassetyopratama/" target="_blank"><i class="fa fa-facebook fa-lg"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="social-link rounded-circle text-white mr-3" href="https://www.instagram.com/pratamaaannas/" target="_blank"><i class="fa fa-instagram fa-lg"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="social-link rounded-circle text-white" href="https://github.com/annaspratama" target="_blank"><i class="fa fa-github fa-lg"></i></a>
+                        </li>
+                    </ul>
+                    <p class="text-light small mb-3">Copyright &copy; 2024 | <a href="https://annaspratama.my.id" class="text-light">Annas Pratama's Portfolio</a> | Built with <a href="https://www.djangoproject.com" class="text-light" target="_blank">Django</a></p>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'custom/js/jquery.min.js' %}"></script>
+    <script src="{% static 'custom/js/button-submit.js' %}"></script>
+    <script src="{% static 'custom/js/validation.js' %}"></script>
+</body>
+</html>
