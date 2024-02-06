@@ -3,15 +3,12 @@ from django.http import HttpResponse
 
 
 class ScrapOlxInterface(ABC):
-    """
-    Scrap OLX's products data.
-    See: https://www.olx.co.id
-    """
 
     @abstractmethod
     def __init__(self, url: str = None) -> None:
         """
-        Init data.
+        Scrap OLX's products data.
+        See: https://www.olx.co.id
 
         Keyword arguments:
         url -- the url site to OLX's products
@@ -38,6 +35,11 @@ class ScrapOlxInterface(ABC):
     @abstractmethod
     def validate_url(self) -> bool:
         """
-        Check the url
+        Check the url is valid
         """
+        pass
+
+    @abstractmethod
+    def __del__(self) -> None:
+        """Destroy scrap OLX and the web driver"""
         pass
