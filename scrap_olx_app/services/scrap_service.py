@@ -23,7 +23,7 @@ class ScrapOlxService(ScrapOlxInterface):
             # validate the url
             if self.validate_url():
                 # set web driver, ex: safari, chrome, firefox, or edge
-                self.webdriver = webdriver.Chrome()
+                self.webdriver = webdriver.Firefox()
                 self.webdriver.maximize_window()
                 self.webdriver.get(url=self.url)
 
