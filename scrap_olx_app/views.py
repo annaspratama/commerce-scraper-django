@@ -41,6 +41,5 @@ class ScrapProducts(TemplateView):
             - HttpResponse -- download as excel file
         """
 
-        print('method: ', request.method)
         if request.method == 'POST' and request.POST.get('commerce') == "olx": return self.service.scrap_olx()
         else: HttpResponse(content="Method not allowed.", status=401)
