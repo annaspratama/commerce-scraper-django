@@ -17,6 +17,9 @@ migrations/
 # Static files
 staticfiles/
 
+# Environments
+.environments/
+
 # Cache
 __pycache__/
 
